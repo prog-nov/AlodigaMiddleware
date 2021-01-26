@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://soap.interfaces.alodiga.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://soap.interfaces.alodiga.com" xmlns:intf="http://soap.interfaces.alodiga.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://soap.interfaces.alodiga.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="addValue">
+    <complexType>
+     <sequence>
+      <element name="value" type="xsd:float"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addValueResponse">
+    <complexType>
+     <sequence>
+      <element name="addValueReturn" type="xsd:float"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="subtractValue">
+    <complexType>
+     <sequence>
+      <element name="value" type="xsd:float"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="subtractValueResponse">
+    <complexType>
+     <sequence>
+      <element name="subtractValueReturn" type="xsd:float"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="addValueRequest">
+
+      <wsdl:part element="impl:addValue" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="subtractValueRequest">
+
+      <wsdl:part element="impl:subtractValue" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="subtractValueResponse">
+
+      <wsdl:part element="impl:subtractValueResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addValueResponse">
+
+      <wsdl:part element="impl:addValueResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="OperationInterfaceSOAP">
+
+      <wsdl:operation name="addValue">
+
+         <wsdl:input message="impl:addValueRequest" name="addValueRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:addValueResponse" name="addValueResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="subtractValue">
+
+         <wsdl:input message="impl:subtractValueRequest" name="subtractValueRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:subtractValueResponse" name="subtractValueResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="OperationInterfaceSOAPSoapBinding" type="impl:OperationInterfaceSOAP">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="addValue">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addValueRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addValueResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="subtractValue">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="subtractValueRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="subtractValueResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="OperationInterfaceSOAPService">
+
+      <wsdl:port binding="impl:OperationInterfaceSOAPSoapBinding" name="OperationInterfaceSOAP">
+
+         <wsdlsoap:address location="http://localhost:8080/AlodigaMiddleWare/services/OperationInterfaceSOAP"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

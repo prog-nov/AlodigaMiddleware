@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from OperationInterfaceSOAPService WSDL service -->
+
+  <service name="OperationInterfaceSOAP" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://soap.interfaces.alodiga.com"/>
+      <parameter name="wsdlServiceElement" value="OperationInterfaceSOAPService"/>
+      <parameter name="schemaQualified" value="http://soap.interfaces.alodiga.com"/>
+      <parameter name="wsdlServicePort" value="OperationInterfaceSOAP"/>
+      <parameter name="className" value="com.alodiga.interfaces.soap.OperationInterfaceSOAP"/>
+      <parameter name="wsdlPortType" value="OperationInterfaceSOAP"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://soap.interfaces.alodiga.com" xmlns:retNS="http://soap.interfaces.alodiga.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="addValue" qname="operNS:addValue" returnQName="retNS:addValueReturn" returnType="rtns:float" soapAction="">
+        <parameter xmlns:pns="http://soap.interfaces.alodiga.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:value" type="tns:float"/>
+      </operation>
+      <operation xmlns:operNS="http://soap.interfaces.alodiga.com" xmlns:retNS="http://soap.interfaces.alodiga.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="subtractValue" qname="operNS:subtractValue" returnQName="retNS:subtractValueReturn" returnType="rtns:float" soapAction="">
+        <parameter xmlns:pns="http://soap.interfaces.alodiga.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:value" type="tns:float"/>
+      </operation>
+      <parameter name="allowedMethods" value="subtractValue addValue"/>
+
+  </service>
+</deployment>
