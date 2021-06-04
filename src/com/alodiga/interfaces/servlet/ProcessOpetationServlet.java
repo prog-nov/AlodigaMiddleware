@@ -15,12 +15,10 @@ public class ProcessOpetationServlet extends HttpServlet {
 	
 	public ProcessOpetationServlet() {
 	        super();
-	        // TODO Auto-generated constructor stub
 	    }
 	
 	
 	 protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 
 	        response.setContentType("text/html");
 	        PrintWriter out = response.getWriter();
 	        out.println("<h1>Mensaje ISO  desde ProcessOpetationServlet</h1>");
