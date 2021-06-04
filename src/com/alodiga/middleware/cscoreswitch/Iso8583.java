@@ -34,6 +34,11 @@ public class Iso8583 implements Serializable, Cloneable {
 	private String ISO_022_PosEntryMode;
 	private String ISO_023_CardSeq;
 	private String ISO_024_NetworkId;
+	//ok 
+
+	
+	
+	
 	private double ISO_028_TranFeeAmount;
 	private double ISO_029_SettlementFee;
 	private double ISO_030_ProcFee;

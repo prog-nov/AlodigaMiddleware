@@ -4,18 +4,23 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+
 import javax.jms.Message;
 import javax.jms.ObjectMessage;
 
 import org.jpos.iso.ISOException;
 import org.jpos.iso.ISOMsg;
 
+import com.alodiga.cms.ws.APIAuthorizerCardManagementSystemProxy;
+import com.alodiga.cms.ws.TransactionPurchageResponse;
 import com.alodiga.middleware.logger.Logger;
 import com.alodiga.middleware.logger.LoggerConfig.TypeMonitor;
 import com.alodiga.middleware.queueadmin.Queue;
 import com.alodiga.middleware.queueadmin.typeMessage;
+import com.alodiga.middleware.utils.ErrorEnum;
+import com.alodiga.middleware.utils.ServiceCodeMappingComparer;
 import com.alodiga.temporal.cache.MemoryGlobal;
-
+import com.sun.corba.se.impl.orbutil.threadpool.TimeoutException;
 
 import urn.iso.std.iso20022.tech.xsd.pacs_002_001_05.DocumentRespuesta;
 import urn.iso.std.iso20022.tech.xsd.pacs_003_001_04.DocumentRetiro;
@@ -29,10 +34,12 @@ public class CallersAsync extends Thread {
 	private ContainerIsoQueue<?> cont;
 	private Message message;
 	private Logger log;
+	private ServiceCodeMappingComparer comparer;
 	
 	public CallersAsync(){
 		
 		log = new Logger();
+		comparer = new ServiceCodeMappingComparer();
 	}
 	
 	public CallersAsync(Message message){
@@ -54,14 +61,25 @@ public class CallersAsync extends Thread {
 				isoMsg.set(39, "00");
 				printISOMessage(isoMsg);
 				/////////////////////////////////
-				//2.Consulta contra el CMS//////
+				//2.Opera contra el CMS//////
 				////////////////////////////////
 				//3. Envia una respuesta
 				MemoryGlobal.concurrentIso.put("96", isoMsg);
 				break;
             case "0200":
-            	
-				
+            	printISOMessage(isoMsg);
+            	isoMsg.getString(7);
+            	try {
+	            	APIAuthorizerCardManagementSystemProxy proxy = new APIAuthorizerCardManagementSystemProxy();
+	            	TransactionPurchageResponse response = proxy.cardPurchage(isoMsg.getString(2), getName(), getName(), getName(), null, null, null, null, getName(),
+	            			getName(), getName(), getName(), null, getName(), getName(), getName(), getName(), getName(),
+	            			getName(), getName(), getName(), getName(), getName(), getName());
+	            	
+	            	isoMsg.set(39, comparer.getEnumByCode(response.getCodigoRespuesta()).getCod());
+            	} catch (Exception e) {
+            		isoMsg.set(39,ErrorEnum.SISTEMA_NO_DISPONIBLE.getCod());
+				}
+            	MemoryGlobal.concurrentIso.put("96", isoMsg);
 				break;
            case "0400":
 				

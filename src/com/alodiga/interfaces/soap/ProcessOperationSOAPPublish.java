@@ -13,6 +13,8 @@ public class ProcessOperationSOAPPublish extends HttpServlet implements ServletC
     private Endpoint ep;
 
 	public ProcessOperationSOAPPublish() {
+		//aqui el levanta la interfaz SOAP
+		
 		try {
 			ep = Endpoint.publish("http://localhost:1515/WS/processTransacction", new ProcessOpetationSOAPImplent());
 		} catch (Exception e) {
