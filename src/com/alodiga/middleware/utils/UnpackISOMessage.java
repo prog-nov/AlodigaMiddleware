@@ -3,6 +3,7 @@ package com.alodiga.middleware.utils;
 import org.jpos.iso.ISOException;
 import org.jpos.iso.ISOMsg;
 import org.jpos.iso.ISOPackager;
+import org.jpos.iso.ISOUtil;
 import org.jpos.iso.packager.GenericPackager;
 
 import java.io.InputStream;
@@ -69,7 +70,7 @@ public class UnpackISOMessage {
     	ISOPackager packager = new GenericPackager(is);
     	ISOMsg m = new ISOMsg();
     	m.setMTI("0200");
-    	m.set(0, "0200");
+//    	m.set(0, "0200");
 //    	m.set(1, "0111101000111010010001100000000110101111111000001001001000001000");
     	m.set(2, "5412781234567890389");//pan
     	m.set(3, "002000");//Código de procesamiento
@@ -79,6 +80,7 @@ public class UnpackISOMessage {
     	m.set(11, "639530");//Número de trace
     	m.set(12, "151639");//Hora local de la transacción
     	m.set(13, "0427"); //Fecha local de la transacción
+    	m.set(14, "0425"); //Fecha local de la transacción
     	m.set(15, "0427"); //Fecha de la conciliación
     	m.set(18, "0200"); //Categoría de comercio (MCC)
     	m.set(22, "001");//Modo de entrada de los datos de la tarjeta en el terminal
@@ -117,6 +119,11 @@ public class UnpackISOMessage {
     private void printISOMessage(ISOMsg isoMsg) {
         try {
             System.out.println("MTI = " + isoMsg.getMTI());
+            for (int i = 1; i <= isoMsg.getMaxField(); i++) {
+                if (isoMsg.hasField(i)) {
+                    System.out.println("Field ("+ i +")"+ isoMsg.getString(i));
+                } 
+            }
             System.out.println("61.1 : " + isoMsg.getString("61.1"));
             System.out.println("61.3 : " + isoMsg.getString("61.3"));
             System.out.println("61.4 : " + isoMsg.getString("61.4"));
@@ -126,11 +133,8 @@ public class UnpackISOMessage {
             System.out.println("61.8 : " + isoMsg.getString("61.8"));
             System.out.println("61.10 : " + isoMsg.getString("61.10"));
             System.out.println("61.13 : " + isoMsg.getString("61.13"));
-            for (int i = 1; i <= isoMsg.getMaxField(); i++) {
-                if (isoMsg.hasField(i)) {
-                    System.out.println("Field ("+ i +")"+ isoMsg.getString(i));
-                } 
-            }
+//            byte[] data = isoMsg.pack();
+//            System.out.println(ISOUtil.hexdump(data));
             System.out.println(isoMsg.toString());
         } catch (ISOException e) {
             e.printStackTrace();

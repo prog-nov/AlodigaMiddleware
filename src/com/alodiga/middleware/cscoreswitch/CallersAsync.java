@@ -15,6 +15,7 @@ import com.alodiga.cms.ws.APIAuthorizerCardManagementSystemProxy;
 import com.alodiga.cms.ws.TransactionPurchageResponse;
 import com.alodiga.middleware.logger.Logger;
 import com.alodiga.middleware.logger.LoggerConfig.TypeMonitor;
+import com.alodiga.middleware.message.internal.PurchagePinRequest;
 import com.alodiga.middleware.queueadmin.Queue;
 import com.alodiga.middleware.queueadmin.typeMessage;
 import com.alodiga.middleware.utils.ErrorEnum;
@@ -68,14 +69,17 @@ public class CallersAsync extends Thread {
 				break;
             case "0200":
             	printISOMessage(isoMsg);
-            	isoMsg.getString(7);
+            	//aqui necesito el objeto con la mensajeria interna para llamar a los servicios del autorizador
+            	PurchagePinRequest request = new PurchagePinRequest(); //esto se debe cambiar ya en este punto debo tener el objeto cargado
             	try {
-	            	APIAuthorizerCardManagementSystemProxy proxy = new APIAuthorizerCardManagementSystemProxy();
-	            	TransactionPurchageResponse response = proxy.cardPurchage(isoMsg.getString(2), getName(), getName(), getName(), null, null, null, null, getName(),
-	            			getName(), getName(), getName(), null, getName(), getName(), getName(), getName(), getName(),
-	            			getName(), getName(), getName(), getName(), getName(), getName());
+//	            	APIAuthorizerCardManagementSystemProxy proxy = new APIAuthorizerCardManagementSystemProxy();
+//	            	TransactionPurchageResponse response = proxy.cardPurchage(request.getCardNumber(),request.getCardHolder(), request.getCVV(), request.getCardDueDate(), request.getMessageMiddlewareId(),
+//	            			request.getTransactionTypeId(), request.getChannelId(), request.getTransactionDate(), request.getLocalTimeTransaction(),request.getAcquirerTerminalCodeId(),
+//	            			request.getTransactionNumberAcquirer(),request.getAcquirerCountryId() , request.getPurchaseAmount(), request.getDocumentNumber(), request.getPinBlock(), request.getARQC(), 
+//	            			request.getTerminalId(), request.getoPMode(),request.getSchemeEMV(),request.getSeqNumber(),request.getAtc(),request.getUnpredictableNumber(),request.getTransactionData(),
+//	            			request.getTradeName());
 	            	
-	            	isoMsg.set(39, comparer.getEnumByCode(response.getCodigoRespuesta()).getCod());
+//	            	isoMsg.set(39, comparer.getEnumByCode(response.getCodigoRespuesta()).getCod());
             	} catch (Exception e) {
             		isoMsg.set(39,ErrorEnum.SISTEMA_NO_DISPONIBLE.getCod());
 				}
