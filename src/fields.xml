@@ -3,7 +3,7 @@
 
 <isopackager>
 <isofield id="0" length="4" name="MESSAGE TYPE INDICATOR" class="org.jpos.iso.IFA_NUMERIC"/>
-<isofield id="1" length="16" name="BIT MAP" class="org.jpos.iso.IFA_BITMAP"/>
+<isofield id="1" length="32" name="BIT MAP" class="org.jpos.iso.IFA_BITMAP"/>
 <isofield id="2" length="19" name="SECRET ID" class="org.jpos.iso.IFA_LLNUM"/>
 <isofield id="3" length="6" name="PROCESSING CODE" class="org.jpos.iso.IFA_NUMERIC"/>
 <isofield id="4" length="12" name="AMOUNT, TRANSACTION" class="org.jpos.iso.IFA_NUMERIC"/>
@@ -54,16 +54,78 @@
 <isofield id="49" length="3" name="CURRENCY CODE, TRANSACTION" class="org.jpos.iso.IF_CHAR"/>
 <isofield id="50" length="3" name="CURRENCY CODE, SETTLEMENT" class="org.jpos.iso.IF_CHAR"/>
 <isofield id="51" length="3" name="CURRENCY CODE, CARDHOLDER BILLING" class="org.jpos.iso.IF_CHAR"/>
-<isofield id="52" length="16" name="PIN DATA" class="org.jpos.iso.IFA_NUMERIC"/>
+<isofield id="52" length="8" name="PIN DATA" class="org.jpos.iso.IFA_NUMERIC"/>
 <isofield id="53" length="16" name="SECURITY RELATED CONTROL INFORMATION" class="org.jpos.iso.IFA_NUMERIC"/>
 <isofield id="54" length="120" name="ADDITIONAL AMOUNTS" class="org.jpos.iso.IFA_LLLCHAR"/>
-<isofield id="55" length="999" name="RESERVED ISO" class="org.jpos.iso.IFA_LLLCHAR"/>
+<isofield id="55" length="999" name="INTEGRATED CIRCUIT CARD" class="org.jpos.iso.IFA_LLLCHAR"/>
 <isofield id="56" length="999" name="RESERVED ISO" class="org.jpos.iso.IFA_LLLCHAR"/>
 <isofield id="57" length="999" name="RESERVED NATIONAL" class="org.jpos.iso.IFA_LLLCHAR"/>
 <isofield id="58" length="999" name="RESERVED NATIONAL" class="org.jpos.iso.IFA_LLLCHAR"/>
 <isofield id="59" length="999" name="RESERVED NATIONAL" class="org.jpos.iso.IFA_LLLCHAR"/>
 <isofield id="60" length="999" name="RESERVED PRIVATE" class="org.jpos.iso.IFA_LLLCHAR"/>
-<isofield id="61" length="999" name="RESERVED PRIVATE" class="org.jpos.iso.IFA_LLLCHAR"/>
+<isofieldpackager
+    id="61"
+    length="40"
+    name="Point-of-Service (POS) Data"
+    class="org.jpos.iso.IFB_LLBINARY"
+    emitBitmap="false"
+    packager="org.jpos.iso.packager.GenericSubFieldPackager">
+    <isofield
+        id="1"
+        length="1"
+        name="POS Terminal Attendance"
+        class="org.jpos.iso.IF_CHAR"/>
+    <isofield
+        id="3"
+        length="1"
+        name="POS Terminal Location"
+        class="org.jpos.iso.IF_CHAR"/>
+    <isofield
+        id="4"
+        length="1"
+        name="POS Cardholder Presence"
+        class="org.jpos.iso.IF_CHAR"/>
+    <isofield
+        id="5"
+        length="1"
+        name="POS Card Presence"
+        class="org.jpos.iso.IF_CHAR"/>
+    <isofield
+        id="6"
+        length="1"
+        name="POS Card Capture Capabilities"
+        class="org.jpos.iso.IF_CHAR"/>
+    <isofield
+        id="7"
+        length="1"
+        name="POS Transaction Status"
+        class="org.jpos.iso.IF_CHAR"/>
+    <isofield
+        id="8"
+        length="1"
+        name="POS Transaction Security"
+        class="org.jpos.iso.IF_CHAR"/>
+    <isofield
+        id="10"
+        length="1"
+        name="Cardholder-Activated Terminal Level"
+        class="org.jpos.iso.IF_CHAR"/>
+    <isofield
+        id="11"
+        length="1"
+        name="POS Card Data Terminal Input Capability Indicator"
+        class="org.jpos.iso.IF_CHAR"/>
+    <isofield
+        id="12"
+        length="2"
+        name="POS Card Data Terminal Input Capability Indicator"
+        class="org.jpos.iso.IF_CHAR"/>
+    <isofield
+        id="13"
+        length="3"
+        name="POS Country Code"
+        class="org.jpos.iso.IF_CHAR"/>
+</isofieldpackager>
 <isofield id="62" length="999" name="RESERVED PRIVATE" class="org.jpos.iso.IFA_LLLCHAR"/>
 <isofield id="63" length="999" name="RESERVED PRIVATE" class="org.jpos.iso.IFA_LLLCHAR"/>
 <isofield id="64" length="8" name="MESSAGE AUTHENTICATION CODE FIELD" class="org.jpos.iso.IFA_BINARY"/>
