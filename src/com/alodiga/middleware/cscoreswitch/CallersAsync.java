@@ -4,18 +4,24 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+
 import javax.jms.Message;
 import javax.jms.ObjectMessage;
 
 import org.jpos.iso.ISOException;
 import org.jpos.iso.ISOMsg;
 
+import com.alodiga.cms.ws.APIAuthorizerCardManagementSystemProxy;
+import com.alodiga.cms.ws.TransactionPurchageResponse;
 import com.alodiga.middleware.logger.Logger;
 import com.alodiga.middleware.logger.LoggerConfig.TypeMonitor;
+import com.alodiga.middleware.message.internal.PurchagePinRequest;
 import com.alodiga.middleware.queueadmin.Queue;
 import com.alodiga.middleware.queueadmin.typeMessage;
+import com.alodiga.middleware.utils.ErrorEnum;
+import com.alodiga.middleware.utils.ServiceCodeMappingComparer;
 import com.alodiga.temporal.cache.MemoryGlobal;
-
+import com.sun.corba.se.impl.orbutil.threadpool.TimeoutException;
 
 import urn.iso.std.iso20022.tech.xsd.pacs_002_001_05.DocumentRespuesta;
 import urn.iso.std.iso20022.tech.xsd.pacs_003_001_04.DocumentRetiro;
@@ -29,10 +35,12 @@ public class CallersAsync extends Thread {
 	private ContainerIsoQueue<?> cont;
 	private Message message;
 	private Logger log;
+	private ServiceCodeMappingComparer comparer;
 	
 	public CallersAsync(){
 		
 		log = new Logger();
+		comparer = new ServiceCodeMappingComparer();
 	}
 	
 	public CallersAsync(Message message){
@@ -54,14 +62,28 @@ public class CallersAsync extends Thread {
 				isoMsg.set(39, "00");
 				printISOMessage(isoMsg);
 				/////////////////////////////////
-				//2.Consulta contra el CMS//////
+				//2.Opera contra el CMS//////
 				////////////////////////////////
 				//3. Envia una respuesta
 				MemoryGlobal.concurrentIso.put("96", isoMsg);
 				break;
             case "0200":
-            	
-				
+            	printISOMessage(isoMsg);
+            	//aqui necesito el objeto con la mensajeria interna para llamar a los servicios del autorizador
+            	PurchagePinRequest request = new PurchagePinRequest(); //esto se debe cambiar ya en este punto debo tener el objeto cargado
+            	try {
+//	            	APIAuthorizerCardManagementSystemProxy proxy = new APIAuthorizerCardManagementSystemProxy();
+//	            	TransactionPurchageResponse response = proxy.cardPurchage(request.getCardNumber(),request.getCardHolder(), request.getCVV(), request.getCardDueDate(), request.getMessageMiddlewareId(),
+//	            			request.getTransactionTypeId(), request.getChannelId(), request.getTransactionDate(), request.getLocalTimeTransaction(),request.getAcquirerTerminalCodeId(),
+//	            			request.getTransactionNumberAcquirer(),request.getAcquirerCountryId() , request.getPurchaseAmount(), request.getDocumentNumber(), request.getPinBlock(), request.getARQC(), 
+//	            			request.getTerminalId(), request.getoPMode(),request.getSchemeEMV(),request.getSeqNumber(),request.getAtc(),request.getUnpredictableNumber(),request.getTransactionData(),
+//	            			request.getTradeName());
+	            	
+//	            	isoMsg.set(39, comparer.getEnumByCode(response.getCodigoRespuesta()).getCod());
+            	} catch (Exception e) {
+            		isoMsg.set(39,ErrorEnum.SISTEMA_NO_DISPONIBLE.getCod());
+				}
+            	MemoryGlobal.concurrentIso.put("96", isoMsg);
 				break;
            case "0400":
 				

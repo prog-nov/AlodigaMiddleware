@@ -75,6 +75,7 @@ public class GlobalServletInit extends HttpServlet implements ServletContextList
 						/*Queue queue = new Queue();
 						queue.ReceiveMessage(typeMessage.initialMessage);
 						queue.ReceiveMessage(typeMessage.storeAndForwardType);*/
+						//esta clase es la que levanta todo!!! lo que va en cache!
 						
 						//ReceiveAsyncMessage 
 						threadPoolReceiveQueueIni = Executors.newFixedThreadPool(200);
